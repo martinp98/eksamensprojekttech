@@ -1,41 +1,41 @@
 package com.nogetfedt.kea.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
 
     @Id
-    private int productId;
-    private String productName;
-    private String imageName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int product_Id;
+    private String product_Name;
+    private String image_Name;
     private String description;
     private Double price;
     private Boolean available;
 
-    public int getProductId() {
-        return productId;
+    public int getProduct_Id() {
+        return product_Id;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct_Id(int product_Id) {
+        this.product_Id = product_Id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getProduct_Name() {
+        return product_Name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProduct_Name(String product_Name) {
+        this.product_Name = product_Name;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getImage_Name() {
+        return image_Name;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setImage_Name(String image_Name) {
+        this.image_Name = image_Name;
     }
 
     public String getDescription() {
@@ -65,9 +65,9 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", imageName='" + imageName + '\'' +
+                "product_Id=" + product_Id +
+                ", product_Name='" + product_Name + '\'' +
+                ", image_Name='" + image_Name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", available=" + available +
