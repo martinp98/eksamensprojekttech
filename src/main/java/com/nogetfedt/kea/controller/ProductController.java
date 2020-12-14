@@ -1,5 +1,6 @@
 package com.nogetfedt.kea.controller;
 
+import com.nogetfedt.kea.model.Product;
 import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,13 @@ public class ProductController {
                 return "addProduct";
             }
 
+            //Executing save
+            @RequestMapping("/newProduct")
+            public String newProduct(Product product)
+            {
+                repo.save(product);
+                return "index";
+            }
 
     //Read
             //ReadAll
