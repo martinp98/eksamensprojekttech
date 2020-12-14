@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,9 +54,18 @@ public class ProductController {
     @PostMapping("/viewSearch")
     public String viewSearchProduct(WebRequest request, Model model)
     {
-        List<Product> viewList = repo.findAll();
-
         int id = Integer.parseInt(request.getParameter("searchId"));
+        String searchWord = request.getParameter("searchWord").toLowerCase();
+
+        ArrayList<Product> viewList = new ArrayList<>();
+
+        for (Product p : repo.findAll())
+        {
+            if(p.getProduct_Name().toLowerCase().contains(searchWord))
+            {
+                viewList.add(p);
+            }
+        }
 
         if(id == 1)
         {
@@ -71,7 +81,6 @@ public class ProductController {
 
             return "/view";
         }
-
         return "redirect:/view";
 
     }
