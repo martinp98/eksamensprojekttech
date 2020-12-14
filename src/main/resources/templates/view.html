@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://java.sun.com/xml/ns/persistence/orm">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+
+
+
+<div class="content">
+    <div class="content-inside">
+        <div th:replace="fragments/nav.html :: navigation"></div>
+        <h1>Hello</h1>
+
+        <form method="POST" action="/viewSearch">
+            <select name="searchId" id="searchId">
+                <option value="1">Price</option>
+                <option value="2">Navn</option>
+            </select>
+
+            <input type="submit" value ="Submit">
+        </form>
+
+        <table th:each="product : ${products}" style="display: inline-block; float: left; border: solid;">
+            <tr>
+                <th th:text="${product.product_Name}"></th>
+            </tr>
+            <td>
+                <td> <img src="testbillede.jfif" style="width: 100px; height: 100px; display: block; margin-left: auto; margin-right: auto"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.description}"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.price}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
