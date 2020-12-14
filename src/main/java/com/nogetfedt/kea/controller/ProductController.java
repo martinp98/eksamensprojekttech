@@ -37,6 +37,13 @@ public class ProductController {
                 return "addProduct";
             }
 
+            //Executing save
+            @RequestMapping("/newProduct")
+            public String newProduct(Product product)
+            {
+                repo.save(product);
+                return "index";
+            }
 
     //Read
             //ReadAll
