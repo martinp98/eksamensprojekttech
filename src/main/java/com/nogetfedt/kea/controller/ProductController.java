@@ -46,49 +46,12 @@ public class ProductController {
     //Crud functions used from ProductRepo extends JpaRepository
 
 
-        //Create
-            //showing page
+    //Create
             @RequestMapping("/addProduct")
             public String addProduct()
             {
                 return "addProduct";
             }
-
-
-    @ModelAttribute
-    @GetMapping("/view")
-    public String viewProduct(Model model)
-    {
-        model.addAttribute("products", repo.findAll());
-
-        return "/view";
-    }
-
-    @PostMapping("/viewSearch")
-    public String viewSearchProduct(WebRequest request, Model model)
-    {
-        List<Product> viewList = repo.findAll();
-
-        int id = Integer.parseInt(request.getParameter("searchId"));
-
-        if(id == 1)
-        {
-            viewList.sort(new PriceSorter());
-            model.addAttribute("products", viewList);
-
-            return "/view";
-        }
-        if(id == 2)
-        {
-            viewList.sort(new NameSorter());
-            model.addAttribute("products", viewList);
-
-            return "/view";
-        }
-
-        return "redirect:/view";
-
-    }
 
 
             //Executing save
@@ -100,14 +63,45 @@ public class ProductController {
             }
 
     //Read
-            //ReadAll
+        @ModelAttribute
+        @GetMapping("/view")
+        public String viewProduct(Model model)
+        {
+            model.addAttribute("products", repo.findAll());
 
-            //ReadById
+            return "/view";
+        }
+
+        @PostMapping("/viewSearch")
+        public String viewSearchProduct(WebRequest request, Model model)
+        {
+            List<Product> viewList = repo.findAll();
+
+            int id = Integer.parseInt(request.getParameter("searchId"));
+
+            if(id == 1)
+            {
+                viewList.sort(new PriceSorter());
+                model.addAttribute("products", viewList);
+
+                return "/view";
+            }
+            if(id == 2)
+            {
+                viewList.sort(new NameSorter());
+                model.addAttribute("products", viewList);
+
+                return "/view";
+            }
+
+            return "redirect:/view";
+
+        }
 
         //Update
         @GetMapping("/edit/{id}")
         public String showUpdateForm(@PathVariable("id") int id, Model model) {
-            Product product = ProductRepo.findById(id)
+            Product product = repo.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
 
             model.addAttribute("product", product);
@@ -122,8 +116,8 @@ public class ProductController {
                 return "update-product";
             }
 
-            ProductRepo.save(product);
-            model.addAttribute("product", ProductRepo.findAll());
+            repo.save(product);
+            model.addAttribute("product", repo.findAll());
             return "redirect:/index";
         }
 
