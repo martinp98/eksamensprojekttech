@@ -12,6 +12,34 @@
         <div th:replace="fragments/nav.html :: navigation"></div>
         <h1>Nyt produkt</h1>
 
+        <form action="newProduct">
+            Produkt id:
+            <br>
+            <input type="text" name="product_Id"><br>
+            <br>
+            Product navn:
+            <br>
+            <input type="text" name="product_Name"><br>
+            <br>
+            Billede navn:
+            <br>
+            <input type="text" name="image_Name"><br>
+            <br>
+            Beskrivelse:
+            <br>
+            <input type="text" name="description"><br>
+            <br>
+            Pris:
+            <br>
+            <input type="text" name="price"><br>
+            <br>
+            Available:
+            <br>
+            <input type="text" name="available"><br>
+            <br>
+            <input type="submit"><br>
+        </form>
     </div>
-</div></body>
+</div>
+</body>
 </html>
