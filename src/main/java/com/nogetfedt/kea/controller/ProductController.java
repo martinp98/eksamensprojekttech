@@ -1,6 +1,8 @@
 package com.nogetfedt.kea.controller;
 
+import com.nogetfedt.kea.model.Product;
 import com.nogetfedt.kea.repository.NameSorter;
+import com.nogetfedt.kea.repository.PriceSorter;
 import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,19 +50,31 @@ public class ProductController {
         return "/view";
     }
 
-    /*@PostMapping("/viewSearch")
+    @PostMapping("/viewSearch")
     public String viewSearchProduct(WebRequest request, Model model)
     {
-        List viewList = repo.findAll();
+        List<Product> viewList = repo.findAll();
 
         int id = Integer.parseInt(request.getParameter("searchId"));
 
         if(id == 1)
         {
-            model.addAttribute("products", viewList.sort(NameSorter);)
+            viewList.sort(new PriceSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+        if(id == 2)
+        {
+            viewList.sort(new NameSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
         }
 
-    }*/
+        return "redirect:/view";
+
+    }
 
 
 
