@@ -1,3 +1,44 @@
-div.item {
-    border-style: solid;
+body {
+    margin: 0;
+}
+#header {
+    font-family:Lobster, Verdana;
+}
+#header ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+}
+
+#header li {
+    display: inline-block;
+    padding: 10px 10px 0px 0px;
+}
+
+#header li a {
+    color: black;
+    text-decoration: none;
+}
+#header li a :hover {
+    text-decoration: underline;
+}
+
+#logo {
+    height: 100px;
+    width: auto;
+}
+
+#logoWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#navWrapper {
+    margin-top: 0;
+    padding-bottom: 10px;
 }
