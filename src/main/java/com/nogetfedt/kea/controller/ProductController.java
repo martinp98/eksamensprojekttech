@@ -1,5 +1,6 @@
 package com.nogetfedt.kea.controller;
 
+import com.nogetfedt.kea.model.IntComparer;
 import com.nogetfedt.kea.model.Product;
 import com.nogetfedt.kea.repository.NameSorter;
 import com.nogetfedt.kea.repository.PriceSorter;
@@ -7,12 +8,11 @@ import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,37 +41,6 @@ public class ProductController {
                 return "addProduct";
             }
 
-
-    @ModelAttribute
-    @GetMapping("/view")
-    public String viewProduct(Model model)
-    {
-        model.addAttribute("products", repo.findAll());
-
-        return "/view";
-    }
-
-    @PostMapping("/viewSearch")
-    public String viewSearchProduct(WebRequest request, Model model)
-    {
-        int id = Integer.parseInt(request.getParameter("searchId"));
-        String searchWord = request.getParameter("searchWord").toLowerCase();
-
-        ArrayList<Product> viewList = new ArrayList<>();
-
-        for (Product p : repo.findAll())
-        {
-            if(p.getProduct_Name().toLowerCase().contains(searchWord))
-            {
-                viewList.add(p);
-            }
-        }
-
-        if(id == 1)
-        {
-            viewList.sort(new PriceSorter());
-            model.addAttribute("products", viewList);
-
             //Executing save
             @RequestMapping("/newProduct")
             public String newProduct(Product product)
@@ -91,9 +60,6 @@ public class ProductController {
             return "/view";
         }
 
-        return "redirect:/view";
-
-
         @PostMapping("/viewSearch")
         public String viewSearchProduct(WebRequest request, Model model)
         {
@@ -107,7 +73,6 @@ public class ProductController {
                 viewList.sort(new PriceSorter());
                 model.addAttribute("products", viewList);
 
-
                 return "/view";
             }
             if(id == 2)
@@ -117,10 +82,7 @@ public class ProductController {
 
                 return "/view";
             }
-
-
             return "redirect:/view";
-
         }
 
         //Update
@@ -149,6 +111,16 @@ public class ProductController {
 
 
         //Delete
+        @RequestMapping("/deleteProduct")
+        public String deleteProduct(Model model){return "deleteProduct";}
 
+        @PostMapping("/deleteProduct")
+        public String deleteProductPost(@ModelAttribute IntComparer intComparer){
+            if (intComparer.compare()){
+                repo.deleteById(intComparer.getInt1());}
+            else{return "deleteProductFailed";}
+            return "deleteProduct";}
+        //modtag 2 ints fra model
+        //hvis de matcher, så prøv at slette produktet med den ID
 
 }
