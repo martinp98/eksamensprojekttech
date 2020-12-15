@@ -38,9 +38,10 @@ public class ProductController {
 
     //Show frontpage
     @RequestMapping("/")
-    public String index()
+    public String index(Model model)
     {
-        return "index.html";
+        model.addAttribute("products", repo.findAll());
+        return "index";
     }
 
     //Crud functions used from ProductRepo extends JpaRepository
