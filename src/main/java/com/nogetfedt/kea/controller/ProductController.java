@@ -1,11 +1,8 @@
 package com.nogetfedt.kea.controller;
 
-
 import com.nogetfedt.kea.model.Product;
 import com.nogetfedt.kea.repository.NameSorter;
 import com.nogetfedt.kea.repository.PriceSorter;
-import com.nogetfedt.kea.model.IntComparer;
-import com.nogetfedt.kea.model.Product;
 import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,20 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import javax.validation.Valid;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 @Controller
 public class ProductController {
@@ -54,6 +42,36 @@ public class ProductController {
             }
 
 
+    @ModelAttribute
+    @GetMapping("/view")
+    public String viewProduct(Model model)
+    {
+        model.addAttribute("products", repo.findAll());
+
+        return "/view";
+    }
+
+    @PostMapping("/viewSearch")
+    public String viewSearchProduct(WebRequest request, Model model)
+    {
+        int id = Integer.parseInt(request.getParameter("searchId"));
+        String searchWord = request.getParameter("searchWord").toLowerCase();
+
+        ArrayList<Product> viewList = new ArrayList<>();
+
+        for (Product p : repo.findAll())
+        {
+            if(p.getProduct_Name().toLowerCase().contains(searchWord))
+            {
+                viewList.add(p);
+            }
+        }
+
+        if(id == 1)
+        {
+            viewList.sort(new PriceSorter());
+            model.addAttribute("products", viewList);
+
             //Executing save
             @RequestMapping("/newProduct")
             public String newProduct(Product product)
@@ -61,6 +79,7 @@ public class ProductController {
                 repo.save(product);
                 return "index";
             }
+
 
     //Read
         @ModelAttribute
@@ -72,10 +91,14 @@ public class ProductController {
             return "/view";
         }
 
+        return "redirect:/view";
+
+
         @PostMapping("/viewSearch")
         public String viewSearchProduct(WebRequest request, Model model)
         {
             List<Product> viewList = repo.findAll();
+
 
             int id = Integer.parseInt(request.getParameter("searchId"));
 
@@ -83,6 +106,7 @@ public class ProductController {
             {
                 viewList.sort(new PriceSorter());
                 model.addAttribute("products", viewList);
+
 
                 return "/view";
             }
@@ -94,11 +118,13 @@ public class ProductController {
                 return "/view";
             }
 
+
             return "redirect:/view";
 
         }
 
         //Update
+
         @GetMapping("/edit/{id}")
         public String showUpdateForm(@PathVariable("id") int id, Model model) {
             Product product = repo.findById(id)
@@ -121,18 +147,8 @@ public class ProductController {
             return "redirect:/index";
         }
 
-        //Delete
-            @RequestMapping("/deleteProduct")
-            public String deleteProduct(Model model){return "deleteProduct";}
 
-            @PostMapping("/deleteProduct")
-            public String deleteProductPost(@ModelAttribute IntComparer intComparer){
-            if (intComparer.compare()){
-            repo.deleteById(intComparer.getInt1());}
-            else{return "deleteProductFailed";}
-             return "deleteProduct";}
-            //modtag 2 ints fra model
-            //hvis de matcher, så prøv at slette produktet med den ID
+        //Delete
 
 
 }

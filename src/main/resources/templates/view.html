@@ -21,7 +21,9 @@
                 <option value="2">Navn</option>
             </select>
 
-            <input type="submit" value ="Submit">
+            <input type="text" id="searchWord" name="searchWord">
+
+            <input type="submit" value ="Søg" >
         </form>
 
         <table th:each="product : ${products}" style="display: inline-block; float: left; border: solid;">
