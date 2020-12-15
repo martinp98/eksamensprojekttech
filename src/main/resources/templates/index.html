@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://java.sun.com/xml/ns/persistence/orm">
 <head>
     <meta charset="UTF-8">
-    <title>Forside</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Anden Konen Webshop</title>
+    <div th:replace="fragments/links.html :: links"></div>
 
 </head>
 <body>
-<div class="content">
-    <div class="content-inside">
         <div th:replace="fragments/nav.html :: navigation"></div>
-        <h1>Hello</h1>
 
 
-
+<div class="container">
+    <div class="row">
+           <img th:each="product : ${products}" class="col-lg-4 fp-image" th:src="@{img/{image}(image=${product.image_Name})}">
     </div>
-</div></body>
+</div>
+
+</body>
 </html>
