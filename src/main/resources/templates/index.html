@@ -12,7 +12,9 @@
 
 <div class="container">
     <div class="row">
-           <img th:each="product : ${products}" class="col-lg-4 fp-image" th:src="@{img/{image}(image=${product.image_Name})}">
+           <a class="col-md-4" th:each="product,pStat : ${products}" th:unless="${pStat.index > 5}" th:href="@{productPage/{id}(id=${product.product_Id})}">
+               <img class="col fp-image" th:src="@{img/{image}(image=${product.image_Name})}">
+           </a>
     </div>
 </div>
 

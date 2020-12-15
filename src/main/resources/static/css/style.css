@@ -57,3 +57,47 @@ body {
     -moz-opacity: 0.8;
     -webkit-opacity: 0.8;
 }
+
+/*Product page */
+.productTitle {
+    font-family: Lobster, Verdana;
+    padding-left: 0px !important;
+    border-bottom: 5px dotted black;
+}
+
+.productDescriptionTitle {
+    font-weight: bold;
+}
+
+.productImage {
+    width: 100%;
+    height: auto;
+    padding-left: 0px !important;
+}
+
+.productTextbox {
+    padding-right: 0px !important;
+}
+
+.productDescription {
+    height: 500px;
+}
+
+.productPrice {
+}
+
+.productOutline {
+    border: 2px ridge whitesmoke;
+    background-color: whitesmoke;
+}
+
+.addToCartButton {
+    border: 1px outset #cacaca;
+    background-color: #cacaca;
+    border-radius: 3px 3px 3px 3px;
+    margin-right: 15px;
+}
+
+.addToCartButton:active {
+    border: 1px inset black;
+}
