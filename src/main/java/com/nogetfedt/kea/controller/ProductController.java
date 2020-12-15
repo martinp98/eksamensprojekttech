@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -113,11 +114,21 @@ public class ProductController {
 
         //Delete
         @RequestMapping("/deleteProduct")
-        public String deleteProduct(Model model){return "deleteProduct";}
+        public String deleteProduct(Model model){
+            model.addAttribute("products", repo.findAll());
+        return "deleteProduct";}
 
         @PostMapping("/deleteProduct")
-        public String deleteProductPost(@ModelAttribute IntComparer intComparer){
+        public String deleteProductPost(@ModelAttribute IntComparer intComparer, Model model){
+            model.addAttribute("products", repo.findAll());
             if (intComparer.compare()){
+                Product productToDelete = repo.findById(intComparer.getInt1()).get();
+                String fileNameToDelete = productToDelete.getImage_Name();
+                File fileToDelete = new File("./src/main/resources/static/img/" + fileNameToDelete);//"../static/img/" + fileNameToDelete);
+                //just debugging aids here
+                //String relativePath = fileToDelete.getPath();
+                //String absolutePath = fileToDelete.getAbsolutePath();
+                boolean checkIfDeleted = fileToDelete.delete();
                 repo.deleteById(intComparer.getInt1());}
             else{return "deleteProductFailed";}
             return "deleteProduct";}

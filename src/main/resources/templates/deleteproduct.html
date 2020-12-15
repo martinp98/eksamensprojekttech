@@ -16,6 +16,14 @@
     <input type="int2" name="int2">
     <input type="submit" name="SLET">
 </form>
+<table th:each="product : ${products}" style="display: inline-block; float: left; border: solid;">
+    <tr>
+        <th th:text="${product.product_Name}"></th>
+    </tr>
+    <tr>
+        <td th:text="${product.product_Id}"></td>
+    </tr>
+</table>
 <li><a href="/"><span>Forside</span></a></li>
 </body>
 </html>
