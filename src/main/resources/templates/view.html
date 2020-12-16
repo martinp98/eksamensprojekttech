@@ -13,12 +13,14 @@
 <div class="content">
     <div class="content-inside">
         <div th:replace="fragments/nav.html :: navigation"></div>
-        <h1>Hello</h1>
+
 
         <form method="POST" action="/viewSearch">
+            <label for="searchId">Vælg filter</label>
             <select name="searchId" id="searchId">
-                <option value="1">Price</option>
-                <option value="2">Navn</option>
+                <option value="1">Ingen</option>
+                <option value="1">Pris</option>
+                <option value="2">Alfabetisk</option>
             </select>
 
             <input type="text" id="searchWord" name="searchWord">

@@ -34,13 +34,13 @@ public class ProductController {
     //Crud functions used from ProductRepo extends JpaRepository
 
 
-    //Create
+        //Create
+            //showing page
             @RequestMapping("/addProduct")
             public String addProduct()
             {
                 return "addProduct";
             }
-
 
     @ModelAttribute
     @GetMapping("/view")
@@ -66,87 +66,39 @@ public class ProductController {
                 viewList.add(p);
             }
         }
-
         if(id == 1)
+        {
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+        if(id == 2)
         {
             viewList.sort(new PriceSorter());
             model.addAttribute("products", viewList);
 
-            //Executing save
-            @RequestMapping("/newProduct")
-            public String newProduct(Product product)
-            {
-                repo.save(product);
-                return "index";
-            }
-
-
-    //Read
-        @ModelAttribute
-        @GetMapping("/view")
-        public String viewProduct(Model model)
+            return "/view";
+        }
+        if(id == 3)
         {
-            model.addAttribute("products", repo.findAll());
+            viewList.sort(new NameSorter());
+            model.addAttribute("products", viewList);
 
             return "/view";
         }
 
         return "redirect:/view";
 
-
-        @PostMapping("/viewSearch")
-        public String viewSearchProduct(WebRequest request, Model model)
-        {
-            List<Product> viewList = repo.findAll();
+    }
 
 
-            int id = Integer.parseInt(request.getParameter("searchId"));
 
-            if(id == 1)
-            {
-                viewList.sort(new PriceSorter());
-                model.addAttribute("products", viewList);
+    //Read
+            //ReadAll
 
-
-                return "/view";
-            }
-            if(id == 2)
-            {
-                viewList.sort(new NameSorter());
-                model.addAttribute("products", viewList);
-
-                return "/view";
-            }
-
-
-            return "redirect:/view";
-
-        }
+            //ReadById
 
         //Update
-
-        @GetMapping("/edit/{id}")
-        public String showUpdateForm(@PathVariable("id") int id, Model model) {
-            Product product = repo.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
-
-            model.addAttribute("product", product);
-            return "update-product";
-        }
-
-        @PostMapping("/update/{id}")
-        public String updateProduct(@PathVariable("id") int id, @Valid Product product,
-                                    BindingResult result, Model model) {
-            if (result.hasErrors()) {
-                product.setProduct_Id(id);
-                return "update-product";
-            }
-
-            repo.save(product);
-            model.addAttribute("product", repo.findAll());
-            return "redirect:/index";
-        }
-
 
         //Delete
 
