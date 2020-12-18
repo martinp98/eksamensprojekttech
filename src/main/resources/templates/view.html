@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>View</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <div th:replace="fragments/links.html :: links"></div>
 
 </head>
 <body>
@@ -42,5 +42,6 @@
         </table>
     </div>
 </div>
+<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Anden Konen - ' + ${product.product_Name}"></title>
+    <div th:replace="fragments/links.html :: links"></div>
+
+</head>
+<body>
+<div th:replace="fragments/nav.html :: navigation"></div>
+
+<div class="container">
+    <div class="row productOutline">
+        <div class="col-8 productImage" ><img class="productImage" th:src="@{/img/{image}(image=${product.image_Name})}"></div>
+        <div class="col">
+             <h1 class="col productTitle" th:text="${product.product_Name}"></h1>
+            <br>
+            <p class="productDescriptionTitle">Beskrivelse:</p>
+             <div class="productDescription" th:text="${product.description}"></div>
+            <div class="row">
+             <div class="col productPrice" th:text="'Pris: ' + ${product.price} + ' kr.'"></div>
+                <button class="col addToCartButton" type="button" name="addToCart">Tilføj til kurv</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

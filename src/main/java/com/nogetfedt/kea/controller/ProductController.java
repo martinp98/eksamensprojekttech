@@ -9,6 +9,11 @@ import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import javax.validation.Valid;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -42,6 +47,18 @@ public class ProductController {
         model.addAttribute("products", repo.findAll());
         return "index";
     }
+
+    //Show Productpage
+    @GetMapping("/productPage/{id}")
+    public String showProductPage(@PathVariable("id") int id, Model model) {
+        Product product = repo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+
+        model.addAttribute("product", product);
+        return "productPage";
+    }
+
+    //Crud functions used from ProductRepo extends JpaRepository
 
     //Create
             @RequestMapping("/addProduct")
@@ -87,7 +104,6 @@ public class ProductController {
 
         return "addProduct";
     }
-
 
 
     //Read
