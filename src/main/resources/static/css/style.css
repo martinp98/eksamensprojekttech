@@ -33,6 +33,8 @@ body {
     background-color: whitesmoke;
     padding-bottom: 5px;
     margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
 }
 
 .socialMedia {
@@ -71,6 +73,21 @@ body {
     opacity: 0.8;
     -moz-opacity: 0.8;
     -webkit-opacity: 0.8;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: black;
+    color: white;
+}
+
+.bufferBox {
+    height: 70px;
+    z-index: -1;
 }
 
 /*Product page */
@@ -117,20 +134,30 @@ body {
     border: 1px inset black;
 }
 
+/* Alle Produkter */
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    background-color: black;
-    color: white;
+.viewImage {
+    width: 100px;
+    height: auto;
 }
 
-.bufferBox {
-    height: 70px;
-    z-index: -1;
+.viewBorder {
+    margin: 10px;
+    border: grey dotted 3px;
+}
+
+.viewSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchId {
+    margin-right: 5px;
+}
+
+#searchWord {
+    margin-right: 5px;
 }
 
 @media screen and (max-width: 767px) {
