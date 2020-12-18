@@ -3,12 +3,22 @@ package com.nogetfedt.kea.controller;
 import com.nogetfedt.kea.model.IntComparer;
 import com.nogetfedt.kea.model.Picture;
 import com.nogetfedt.kea.model.Product;
+
+import com.nogetfedt.kea.model.ProductService;
+
 import com.nogetfedt.kea.repository.NameSorter;
 import com.nogetfedt.kea.repository.PriceSorter;
+
 import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -41,9 +51,9 @@ import java.util.List;
 @Controller
 public class ProductController {
 
+    private ProductService productService;
     @Autowired
     ProductRepo repo;
-
     //Show frontpage
     @RequestMapping("/")
     public String index(Model model)
@@ -147,6 +157,14 @@ public class ProductController {
 
         //Update
 
+
+            @RequestMapping("/update-product/{id}")
+            public String updateProduct(@PathVariable int id, Model model){
+            model.addAttribute("product", productService.get(id));
+            return "/update-product";
+            }
+
+
         @GetMapping("/edit/{id}")
         public String showUpdateForm(@PathVariable("id") int id, Model model) {
             Product product = repo.findById(id)
@@ -168,6 +186,7 @@ public class ProductController {
             model.addAttribute("product", repo.findAll());
             return "redirect:/index";
         }
+
 
 
         //Delete
