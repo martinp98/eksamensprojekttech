@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete product</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <div th:replace="fragments/links.html :: links"></div>
 
 </head>
 <body>
-
+<div th:replace="fragments/nav.html :: navigation"></div>
 <form action="/deleteProduct" method="post">
     <h1>Indtast ID på produktet du ønsker at slette</h1>
     <p>Indtast ID:</p>

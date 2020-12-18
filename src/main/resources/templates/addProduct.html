@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nyt Produkt</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <div th:replace="fragments/links.html :: links"></div>
 
 </head>
 <body>
@@ -12,34 +12,32 @@
         <div th:replace="fragments/nav.html :: navigation"></div>
         <h1>Nyt produkt</h1>
 
-        <form action="newProduct">
-            Produkt id:
-            <br>
-            <input type="text" name="product_Id"><br>
-            <br>
+        <form th:action="@{/newProduct}" method="post">
+
             Product navn:
             <br>
-            <input type="text" name="product_Name"><br>
+            <input type="text" name="product_Name" accept="image/jpeg" required><br>
             <br>
-            Billede navn:
+            Billede navn: (Sørg for navnet er det samme som på filen og indsæt .jpg efter navnet fx "billede.jpg")
             <br>
-            <input type="text" name="image_Name"><br>
+            <input type="text" name="image_Name" required><br>
             <br>
             Beskrivelse:
             <br>
-            <input type="text" name="description"><br>
+            <input type="text" name="description" required><br>
             <br>
             Pris:
             <br>
-            <input type="text" name="price"><br>
+            <input type="text" name="price" required><br>
             <br>
             Available:
             <br>
-            <input type="text" name="available"><br>
+            <input type="text" name="available" required><br>
             <br>
-            <input type="submit"><br>
+            <input type="submit" value="Opret produkt"><br>
         </form>
     </div>
+
 </div>
 </body>
 </html>
