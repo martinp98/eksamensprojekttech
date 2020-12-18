@@ -9,12 +9,20 @@
 <body>
 
         <div th:replace="fragments/nav.html :: navigation"></div>
+
         <div class="container">
 
         <form class="viewSearch col" method="POST" action="/viewSearch">
+
+
+
+        <form method="POST" action="/viewSearch">
+            <label for="searchId">Vælg filter</label>
+
             <select name="searchId" id="searchId">
-                <option value="1">Price</option>
-                <option value="2">Navn</option>
+                <option value="1">Ingen</option>
+                <option value="1">Pris</option>
+                <option value="2">Alfabetisk</option>
             </select>
 
             <input type="text" id="searchWord" name="searchWord">
@@ -37,6 +45,25 @@
                 </div>
         </div>
 
+
 <div th:replace="fragments/footer.html :: footer"></div>
+
+        <table th:each="product : ${products}" style="display: inline-block; float: left; border: solid;">
+            <tr>
+                <th th:text="${product.product_Name}"></th>
+            </tr>
+            <td>
+            <td> <img th:src="@{img/{image}(image=${product.image_Name})}" style="width: 100px; height: 100px; display: block; margin-left: auto; margin-right: auto"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.description}"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.price}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

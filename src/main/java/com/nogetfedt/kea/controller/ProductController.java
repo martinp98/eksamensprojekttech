@@ -3,17 +3,30 @@ package com.nogetfedt.kea.controller;
 import com.nogetfedt.kea.model.IntComparer;
 import com.nogetfedt.kea.model.Picture;
 import com.nogetfedt.kea.model.Product;
+
+import com.nogetfedt.kea.model.ProductService;
+
 import com.nogetfedt.kea.repository.NameSorter;
 import com.nogetfedt.kea.repository.PriceSorter;
+
 import com.nogetfedt.kea.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
+
+import java.io.File;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -29,6 +42,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,9 +51,9 @@ import java.util.List;
 @Controller
 public class ProductController {
 
+    private ProductService productService;
     @Autowired
     ProductRepo repo;
-
     //Show frontpage
     @RequestMapping("/")
     public String index(Model model)
@@ -116,32 +130,56 @@ public class ProductController {
             return "/view";
         }
 
-        @PostMapping("/viewSearch")
-        public String viewSearchProduct(WebRequest request, Model model)
+    @PostMapping("/viewSearch")
+    public String viewSearchProduct(WebRequest request, Model model)
+    {
+        int id = Integer.parseInt(request.getParameter("searchId"));
+        String searchWord = request.getParameter("searchWord").toLowerCase();
+
+        ArrayList<Product> viewList = new ArrayList<>();
+
+        for (Product p : repo.findAll())
         {
-            List<Product> viewList = repo.findAll();
-
-
-            int id = Integer.parseInt(request.getParameter("searchId"));
-
-            if(id == 1)
+            if(p.getProduct_Name().toLowerCase().contains(searchWord))
             {
-                viewList.sort(new PriceSorter());
-                model.addAttribute("products", viewList);
-
-                return "/view";
+                viewList.add(p);
             }
-            if(id == 2)
-            {
-                viewList.sort(new NameSorter());
-                model.addAttribute("products", viewList);
+        }
+        if(id == 1)
+        {
+            model.addAttribute("products", viewList);
 
-                return "/view";
-            }
-            return "redirect:/view";
+            return "/view";
+        }
+        if(id == 2)
+        {
+            viewList.sort(new PriceSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+        if(id == 3)
+        {
+            viewList.sort(new NameSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
         }
 
+        return "redirect:/view";
+
+    }
+
+
         //Update
+
+
+            @RequestMapping("/update-product/{id}")
+            public String updateProduct(@PathVariable int id, Model model){
+            model.addAttribute("product", productService.get(id));
+            return "/update-product";
+            }
+
 
         @GetMapping("/edit/{id}")
         public String showUpdateForm(@PathVariable("id") int id, Model model) {
@@ -166,13 +204,24 @@ public class ProductController {
         }
 
 
+
         //Delete
         @RequestMapping("/deleteProduct")
-        public String deleteProduct(Model model){return "deleteProduct";}
+        public String deleteProduct(Model model){
+            model.addAttribute("products", repo.findAll());
+        return "deleteProduct";}
 
         @PostMapping("/deleteProduct")
-        public String deleteProductPost(@ModelAttribute IntComparer intComparer){
+        public String deleteProductPost(@ModelAttribute IntComparer intComparer, Model model){
+            model.addAttribute("products", repo.findAll());
             if (intComparer.compare()){
+                Product productToDelete = repo.findById(intComparer.getInt1()).get();
+                String fileNameToDelete = productToDelete.getImage_Name();
+                File fileToDelete = new File("./src/main/resources/static/img/" + fileNameToDelete);//"../static/img/" + fileNameToDelete);
+                //just debugging aids here
+                //String relativePath = fileToDelete.getPath();
+                //String absolutePath = fileToDelete.getAbsolutePath();
+                boolean checkIfDeleted = fileToDelete.delete();
                 repo.deleteById(intComparer.getInt1());}
             else{return "deleteProductFailed";}
             return "deleteProduct";}
