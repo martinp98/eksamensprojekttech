@@ -7,8 +7,8 @@
 
 </head>
 <body>
-<div class="content">
-    <div class="content-inside">
+<div class="container">
+
         <form action="#"
               th:action="@{/update/{id}(id=${product.id})}"
               th:object="${product}"
@@ -29,6 +29,7 @@
             <input type="submit" value="Update product">
         </form>
     </div>
-</div>
+
+<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

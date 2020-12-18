@@ -10,7 +10,10 @@
 <div class="content">
     <div class="content-inside">
         <div th:replace="fragments/nav.html :: navigation"></div>
+
+        <div class="container">
         <h1>Nyt produkt</h1>
+
 
         <form th:action="@{/newProduct}" method="post">
 
@@ -37,7 +40,8 @@
             <input type="submit" value="Opret produkt"><br>
         </form>
     </div>
-
+    </div>
 </div>
+<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>
