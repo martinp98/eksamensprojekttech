@@ -130,30 +130,46 @@ public class ProductController {
             return "/view";
         }
 
-        @PostMapping("/viewSearch")
-        public String viewSearchProduct(WebRequest request, Model model)
+    @PostMapping("/viewSearch")
+    public String viewSearchProduct(WebRequest request, Model model)
+    {
+        int id = Integer.parseInt(request.getParameter("searchId"));
+        String searchWord = request.getParameter("searchWord").toLowerCase();
+
+        ArrayList<Product> viewList = new ArrayList<>();
+
+        for (Product p : repo.findAll())
         {
-            List<Product> viewList = repo.findAll();
-
-
-            int id = Integer.parseInt(request.getParameter("searchId"));
-
-            if(id == 1)
+            if(p.getProduct_Name().toLowerCase().contains(searchWord))
             {
-                viewList.sort(new PriceSorter());
-                model.addAttribute("products", viewList);
-
-                return "/view";
+                viewList.add(p);
             }
-            if(id == 2)
-            {
-                viewList.sort(new NameSorter());
-                model.addAttribute("products", viewList);
-
-                return "/view";
-            }
-            return "redirect:/view";
         }
+        if(id == 1)
+        {
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+        if(id == 2)
+        {
+            viewList.sort(new PriceSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+        if(id == 3)
+        {
+            viewList.sort(new NameSorter());
+            model.addAttribute("products", viewList);
+
+            return "/view";
+        }
+
+        return "redirect:/view";
+
+    }
+
 
         //Update
 
