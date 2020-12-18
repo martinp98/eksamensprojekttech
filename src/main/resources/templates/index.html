@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://java.sun.com/xml/ns/persistence/orm">
 <head>
     <meta charset="UTF-8">
-    <title>Forside</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Anden Konen Webshop</title>
+    <div th:replace="fragments/links.html :: links"></div>
 
 </head>
 <body>
-<div class="content">
-    <div class="content-inside">
         <div th:replace="fragments/nav.html :: navigation"></div>
-        <h1>Hello</h1>
 
+
+<div class="container">
+    <div class="row">
+           <a class="col-md-4" th:each="product,pStat : ${products}" th:unless="${pStat.index > 5}" th:href="@{productPage/{id}(id=${product.product_Id})}">
+               <img class="col fp-image" th:src="@{img/{image}(image=${product.image_Name})}">
+           </a>
     </div>
-</div></body>
+</div>
+
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
 </html>
