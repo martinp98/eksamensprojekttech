@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Nyt Produkt</title>
+    <div th:replace="fragments/links.html :: links"></div>
+
+</head>
+<body>
+<div class="content">
+    <div class="content-inside">
+        <div th:replace="fragments/nav.html :: navigation"></div>
+
+        <div class="container">
+        <h1>Nyt produkt</h1>
+
+
+        <form th:action="@{/newProduct}" method="post">
+
+            Product navn:
+            <br>
+            <input type="text" name="product_Name" accept="image/jpeg" required><br>
+            <br>
+            Billede navn: (Sørg for navnet er det samme som på filen og indsæt .jpg efter navnet fx "billede.jpg")
+            <br>
+            <input type="text" name="image_Name" required><br>
+            <br>
+            Beskrivelse:
+            <br>
+            <input type="text" name="description" required><br>
+            <br>
+            Pris:
+            <br>
+            <input type="text" name="price" required><br>
+            <br>
+            Available:
+            <br>
+            <input type="text" name="available" required><br>
+            <br>
+            <input type="submit" value="Opret produkt"><br>
+        </form>
+    </div>
+    </div>
+</div>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

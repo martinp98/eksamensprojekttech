@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://java.sun.com/xml/ns/persistence/orm">
+<head>
+    <meta charset="UTF-8">
+    <title>Alle Produkter</title>
+    <div th:replace="fragments/links.html :: links"></div>
+
+</head>
+<body>
+
+        <div th:replace="fragments/nav.html :: navigation"></div>
+
+        <div class="container">
+
+        <form class="viewSearch col" method="POST" action="/viewSearch">
+
+
+
+        <form method="POST" action="/viewSearch">
+            <label for="searchId">Vælg filter</label>
+
+            <select name="searchId" id="searchId">
+                <option value="1">Ingen</option>
+                <option value="1">Pris</option>
+                <option value="2">Alfabetisk</option>
+            </select>
+
+            <input type="text" id="searchWord" name="searchWord">
+
+            <input type="submit" value ="Søg" >
+        </form>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div th:each="product : ${products}" class="col viewBorder">
+
+                    <div th:text="${product.product_Name}"></div>
+                    <a th:href="@{productPage/{id}(id=${product.product_Id})}">
+                        <img class="viewImage" th:src="@{img/{image}(image=${product.image_Name})}">
+                    </a>
+                     <div th:text="'pris: ' + ${product.price} + 'kr.'"></div>
+                    <a href="#"><button name="edit">Rediger</button></a>
+                </div>
+                </div>
+        </div>
+
+
+<div th:replace="fragments/footer.html :: footer"></div>
+
+        <table th:each="product : ${products}" style="display: inline-block; float: left; border: solid;">
+            <tr>
+                <th th:text="${product.product_Name}"></th>
+            </tr>
+            <td>
+            <td> <img th:src="@{img/{image}(image=${product.image_Name})}" style="width: 100px; height: 100px; display: block; margin-left: auto; margin-right: auto"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.description}"></td>
+            </tr>
+            <tr>
+                <td th:text="${product.price}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
