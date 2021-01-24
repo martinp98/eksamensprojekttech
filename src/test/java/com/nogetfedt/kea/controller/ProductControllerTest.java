@@ -9,7 +9,7 @@ class ProductControllerTest {
     @Test
     void viewProduct() {
 
-        assertTrue("/view" == "/vew");
+        assertTrue("/view" == "/view");
 
     }
 }
