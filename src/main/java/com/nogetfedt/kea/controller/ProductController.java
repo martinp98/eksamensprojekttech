@@ -145,7 +145,6 @@ public class ProductController {
                 viewList.add(p);
             }
         }
-        jkh
         if(id == 1)
         {
             model.addAttribute("products", viewList);
